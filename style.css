@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url("./fonts/Roboto-Regular.ttf") format('truetype');
+}
+@font-face {
+    font-family: 'Batuphat';
+    src: url("./fonts/Batuphat\ Script.otf") format('opentype');
+}
+
+body {
+    min-height: 89vh;
+    background: url(./images/joanna-kosinska-mjC9apK53a8-unsplash.jpg);
+    background-attachment: fixed;
+    font-family: 'Roboto';
+}
+header {
+    text-align: center;
+    margin-top: 5%
+}
+h1 {
+    font-family: 'Batuphat';
+    font-size: 60px;
+    text-shadow: 15px 10px 1px rgba(151, 171, 191, 0.5);
+}
+header p  {
+    font-weight: 900;
+    font-size: large;
+}
+.main-weather-image {
+    width: 5%;
+    text-align: center;
+}
+.weather-image {
+    width: clamp(30%, 32%, 35%);
+    margin-left: auto;
+    margin-right: auto;
+}
+ul {
+    list-style: none;
+    display: flex;
+    width: 60%;
+    margin: 1% auto 1% auto;
+    padding: 3%;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 3px 3px 2px rgba(151, 171, 191, 0.5);
+    border-radius: 1%;
+}
+li {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+footer {
+    text-align: center;
+    margin-top: 3%;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-shadow: 0px 0px 2px gray;
+}
+
+@media only screen and (max-width: 850px) {
+
+    header {
+        margin-top: 20%;
+        margin-bottom: 10%;
+    }
+    h1 {
+        font-size: 40px;
+    }
+    .main-weather-image {
+        width: 10%;
+    }
+    ul {
+        flex-direction: column;
+        width: 40%;
+    }
+    .weather-image {
+        width: 20%;
+    }
+    footer {
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+}
+@media only screen and (max-width: 450px) {
+
+    .main-weather-image {
+        width: 20%;
+    }
+    .weather-image {
+        width: 25%;
+    }
+}
