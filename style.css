@@ -54,6 +54,9 @@ footer {
     text-align: center;
     margin-top: 3%;
 }
+.name {
+    font-family: 'Batuphat';
+}
 a {
     text-decoration: none;
     color: black;
