@@ -5,17 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <script src="mainAPI.js" defer></script>
     <title>Météo</title>
   </head>
   <body>
     <header>
       <h1>Ma météo de poche</h1>
       <img src="./images/rain.png" alt="image de la météo actuelle" class="main-weather-image" />
-      <p>
-        Aujourd'hui :
-        <div class="current-date">Aujourd'hui</div>
-      </p>
+      <p class="current-date">Aujourd'hui</p>
       <p class="main-temperature">8 °C</p>
+      <p class="main-weather">Pluie</p>
+      <p class="humidity">Humidité %</p>
       <p class="position">Grenoble</p>
     </header>
 
@@ -59,10 +59,9 @@
 
     <footer>
       <p>
-        Cet imprévisible site vous est présenté par 
+        Ce site vous est proposé par
         <a href="https://github.com/NaelJL" target="_blank" class="name">Nael</a>.
       </p>
     </footer>
-    <script src="main.js"></script>
   </body>
 </html>

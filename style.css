@@ -8,8 +8,8 @@
 }
 
 body {
-    min-height: 89vh;
-    background: url(./images/joanna-kosinska-mjC9apK53a8-unsplash.jpg);
+    min-height: 100%;
+    background: url('images/joanna-kosinska-mjC9apK53a8-unsplash.jpg');
     background-attachment: fixed;
     font-family: 'Roboto';
 }
@@ -23,8 +23,10 @@ h1 {
     text-shadow: 15px 10px 1px rgba(151, 171, 191, 0.5);
 }
 header p  {
-    font-weight: 900;
     font-size: large;
+}
+.current-date, .main-temperature {
+    font-weight: 900;
 }
 .main-weather-image {
     width: 5%;
@@ -52,7 +54,7 @@ li {
 }
 footer {
     text-align: center;
-    margin-top: 3%;
+    margin: 40px 0px;
 }
 .name {
     font-family: 'Batuphat';
@@ -66,7 +68,6 @@ a:hover {
 }
 
 @media only screen and (max-width: 850px) {
-
     header {
         margin-top: 20%;
         margin-bottom: 10%;
@@ -90,7 +91,6 @@ a:hover {
     }
 }
 @media only screen and (max-width: 450px) {
-
     .main-weather-image {
         width: 20%;
     }
