@@ -20,6 +20,7 @@ header {
 h1 {
     font-family: 'Batuphat';
     font-size: 60px;
+    margin-bottom: 20px;
     text-shadow: 15px 10px 1px rgba(151, 171, 191, 0.5);
 }
 header p  {

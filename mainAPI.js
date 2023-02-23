@@ -1,3 +1,7 @@
+import {apiKey} from './apiKey.js';
+
+
+
 // Alerte si la géolocalisation n'est pas activée
 if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(location => {
@@ -11,17 +15,44 @@ if(navigator.geolocation) {
 
 
 
+// tableau des images de météo associées
+let imgArray = [
+  'images/cloud.png',
+  'images/rain.png',
+  'images/sun.png',
+  'images/night.png',
+  'images/rocket.png',
+  'images/snow.png'
+];
+
+
+
+// variables des jours pour la température  
+let daysName = document.querySelectorAll(".day-name");
+let daysTemperature = document.querySelectorAll(".temperature");
+let plusOneTemp = document.querySelector("#plusOneTemp");
+let plusTwoTemp = document.querySelector("#plusTwoTemp");
+let plusThreeTemp = document.querySelector("#plusThreeTemp");
+let plusForTemp = document.querySelector("#plusForTemp");
+let plusFiveTemp = document.querySelector("#plusFiveTemp");
+let plusOneImg = document.querySelector('#plusOneImg');
+let plusTwoImg = document.querySelector('#plusTwoImg');
+let plusThreeImg = document.querySelector('#plusThreeImg');
+let plusForImg = document.querySelector('#plusForImg');
+let plusFiveImg = document.querySelector('#plusFiveImg');
+
+
+
 // Aller chercher les infos de l'API
-let apiKey = "6b4c12a10aea5dd6de38459c8cb1606a";
-
 async function getWeatherData(long, lat){
+  const results = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric&cnt=40&lang=fr`);
 
-  const results = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&lang=fr&appid=${apiKey}`);
-  const data = await results.json()
+  const data = await results.json();
+  
   console.log(data);
 
-  populateMainInfo(data)
-  // handleDays(data.daily)
+  mainInfo(data);
+  weekInfo(data);
 }
 
 
@@ -60,7 +91,7 @@ let tomorrow = new Date();
 
 function plusDate (plus) {
     tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrowString = tomorrow.toLocaleDateString("fr-FR", {weekday: "long", day: "numeric"});
+    let tomorrowString = tomorrow.toLocaleDateString("fr-FR", {weekday: "long", day: "numeric"});
     plus.innerHTML = tomorrowString.toLowerCase();
 }
 
@@ -74,52 +105,145 @@ plusDate(plusSeven);
 
 
 
-// tableau des images de météo associées
-let imgArray = [
-  'images/cloud.png',
-  'images/rain.png',
-  'images/sun.png',
-  'images/night.png',
-  'images/rocket.png'
-];
-
-
-
-// afficher les résultats de l'API
-function populateMainInfo(data){
-  let mainTemperatureK = data.main.temp;
-  let mainTemperatureC = mainTemperatureK - 273.15;
-  let mainTemperature = Math.round(mainTemperatureC);
+// afficher les résultats de l'API pour la jour en cours
+function mainInfo(data){
+  let mainTemperature = Math.round(data.list[0].main.temp);
   temperature.innerHTML = `${mainTemperature}°C`;
 
-  let weatherDescription = data.weather[0].description;
-  mainWeather.innerHTML = weatherDescription;
+  let weatherNiceDescription = data.list[0].weather[0].description;
+  mainWeather.innerHTML = weatherNiceDescription;
 
-  if(weatherDescription === 'pluie'){
+  let weatherDescription = data.list[0].weather[0].main;
+  if(weatherDescription === 'Rain'){
     image.src = imgArray[1];
-  } else if(weatherDescription === 'couvert'){
+  } else if(weatherDescription === 'Clouds'){
     image.src = imgArray[0];
-  } else if(weatherDescription === 'soleil'){
+  } else if(weatherDescription === 'Clear'){
     image.src = imgArray[2];
+  } else if(weatherDescription === 'Snow'){
+    image.src = imgArray[5];
   } else {
     image.src = imgArray[4];
   }
 
-  let mainHumidity = data.main.humidity;
+  let mainHumidity = data.list[3].main.humidity;
   humidity.innerHTML = `${mainHumidity}% d'humidité`;
 
-  let mainPosition = data.name;
+  let mainPosition = data.city.name;
   position.innerHTML = mainPosition;
 }
   
 
 
-let daysName = document.querySelectorAll(".day-name")
-let daysTemperature = document.querySelectorAll(".temperature")
-let li = document.querySelectorAll('li');
+// afficher les résultats de l'API pour la semaine
+function setWeatherInfo(element, elementImg, temperature, weatherDescription){
+  element.innerHTML = `${Math.round(temperature)}°C`;
 
-function handleDays(data){
-    li.forEach((day, index) => {
-      
-    })
+  switch(weatherDescription){
+    case 'Clouds':
+      elementImg.src = imgArray[0];
+      break;
+    case 'Rain':
+      elementImg.src = imgArray[1];
+      break;
+    case 'Clear':
+      elementImg.src = imgArray[2];
+      break;
+    case 'Snow':
+      elementImg.src = imgArray[5];
+      break;
+    default:
+      elementImg.src = imgArray[4];
+      break;
+  }
 }
+
+function weekInfo(data){
+  setWeatherInfo(plusOneTemp, plusOneImg, data.list[8].main.temp, data.list[8].weather[0].main);
+  setWeatherInfo(plusTwoTemp, plusTwoImg, data.list[16].main.temp, data.list[16].weather[0].main);
+  setWeatherInfo(plusThreeTemp, plusThreeImg, data.list[24].main.temp, data.list[24].weather[0].main);
+  setWeatherInfo(plusForTemp, plusForImg, data.list[32].main.temp, data.list[32].weather[0].main);
+  setWeatherInfo(plusFiveTemp, plusFiveImg, data.list[39].main.temp, data.list[39].weather[0].main);
+}
+
+// function weekInfo(data){
+//   let plusOneTemperature = Math.round(data.list[8].main.temp);
+//   plusOneTemp.innerHTML = `${plusOneTemperature}°C`;
+
+//   let weatherDescriptionOne = data.list[8].weather[0].main;
+//   if(weatherDescriptionOne === 'Rain'){
+//     plusOneImg.src = imgArray[1];
+//   } else if(weatherDescriptionOne === 'Clouds'){
+//     plusOneImg.src = imgArray[0];
+//   } else if(weatherDescriptionOne === 'Clear'){
+//     plusOneImg.src = imgArray[2];
+//   } else if(weatherDescriptionOne === 'Snow'){
+//     plusOneImg.src = imgArray[5];
+//   } else {
+//     plusOneImg.src = imgArray[4];
+//   }
+
+//   let plusTwoTemperature = Math.round(data.list[16].main.temp);
+//   plusTwoTemp.innerHTML = `${plusTwoTemperature}°C`;
+
+//   let weatherDescriptionTwo = data.list[16].weather[0].main;
+//   if(weatherDescriptionTwo === 'Rain'){
+//     plusTwoImg.src = imgArray[1];
+//   } else if(weatherDescriptionTwo === 'Clouds'){
+//     plusTwoImg.src = imgArray[0];
+//   } else if(weatherDescriptionTwo === 'Clear'){
+//     plusTwoImg.src = imgArray[2];
+//   } else if(weatherDescriptionTwo === 'Snow'){
+//     plusTwoImg.src = imgArray[5];
+//   } else {
+//     plusTwoImg.src = imgArray[4];
+//   }
+
+//   let plusThreeTemperature = Math.round(data.list[24].main.temp);
+//   plusThreeTemp.innerHTML = `${plusThreeTemperature}°C`;
+
+//   let weatherDescriptionThree = data.list[24].weather[0].main;
+//   if(weatherDescriptionThree === 'Rain'){
+//     plusThreeImg.src = imgArray[1];
+//   } else if(weatherDescriptionThree === 'Clouds'){
+//     plusThreeImg.src = imgArray[0];
+//   } else if(weatherDescriptionThree === 'Clear'){
+//     plusThreeImg.src = imgArray[2];
+//   } else if(weatherDescriptionThree === 'Snow'){
+//     plusThreeImg.src = imgArray[5];
+//   } else {
+//     plusThreeImg.src = imgArray[4];
+//   }
+
+//   let plusForTemperature = Math.round(data.list[32].main.temp);
+//   plusForTemp.innerHTML = `${plusForTemperature}°C`;
+
+//   let weatherDescriptionFor = data.list[32].weather[0].main;
+//   if(weatherDescriptionFor === 'Rain'){
+//     plusForImg.src = imgArray[1];
+//   } else if(weatherDescriptionFor === 'Clouds'){
+//     plusForImg.src = imgArray[0];
+//   } else if(weatherDescriptionFor === 'Clear'){
+//     plusForImg.src = imgArray[2];
+//   } else if(weatherDescriptionFor === 'Snow'){
+//     plusForImg.src = imgArray[5];
+//   } else {
+//     plusForImg.src = imgArray[4];
+//   }
+
+//   let plusFiveTemperature = Math.round(data.list[39].main.temp);
+//   plusFiveTemp.innerHTML = `${plusFiveTemperature}°C`;
+
+//   let weatherDescriptionFive = data.list[39].weather[0].main;
+//   if(weatherDescriptionFive === 'Rain'){
+//     plusFiveImg.src = imgArray[1];
+//   } else if(weatherDescriptionFive === 'Clouds'){
+//     plusFiveImg.src = imgArray[0];
+//   } else if(weatherDescriptionFive === 'Clear'){
+//     plusFiveImg.src = imgArray[2];
+//   } else if(weatherDescriptionFive === 'Snow'){
+//     plusFiveImg.src = imgArray[5];
+//   } else {
+//     plusFiveImg.src = imgArray[4];
+//   }
+// }

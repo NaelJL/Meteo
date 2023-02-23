@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script src="mainAPI.js" defer></script>
+    <script src="mainAPI.js" defer type="module"></script>
+    <script src="apiKey.js" defer type="module"></script>
     <title>Météo</title>
   </head>
   <body>
@@ -15,45 +16,35 @@
       <p class="current-date">Aujourd'hui</p>
       <p class="main-temperature">8 °C</p>
       <p class="main-weather">Pluie</p>
-      <p class="humidity">Humidité %</p>
+      <p class="humidity">Humidité</p>
       <p class="position">Grenoble</p>
     </header>
 
     <ul>
       <li>
         <p class="day-name" id="plusOne">Lundi</p>
-        <img src="./images/cloud.png" alt="image météo de lundi" class="weather-image" />
-        <p class="temperature">8 °C</p>
+        <img src="./images/cloud.png" alt="image météo de lundi" class="weather-image" id="plusOneImg" />
+        <p class="temperature" id="plusOneTemp">8 °C</p>
       </li>
       <li>
         <p class="day-name" id="plusTwo">Mardi</p>
-        <img src="./images/cloud.png" alt="image météo de mardi" class="weather-image" />
-        <p class="temperature">8 °C</p>
+        <img src="./images/cloud.png" alt="image météo de mardi" class="weather-image" id="plusTwoImg" />
+        <p class="temperature" id="plusTwoTemp">8 °C</p>
       </li>
       <li>
         <p class="day-name" id="plusThree">Mercredi</p>
-        <img src="./images/cloud.png" alt="image météo de mercredi" class="weather-image" />
-        <p class="temperature">8 °C</p>
+        <img src="./images/cloud.png" alt="image météo de mercredi" class="weather-image" id="plusThreeImg" />
+        <p class="temperature" id="plusThreeTemp">8 °C</p>
       </li>
       <li>
         <p class="day-name" id="plusFour">Jeudi</p>
-        <img src="./images/cloud.png" alt="image météo de jeudi" class="weather-image" />
-        <p class="temperature">8 °C</p>
+        <img src="./images/cloud.png" alt="image météo de jeudi" class="weather-image" id="plusForImg" />
+        <p class="temperature" id="plusForTemp">8 °C</p>
       </li>
       <li>
         <p class="day-name" id="plusFive">Vendredi</p>
-        <img src="./images/cloud.png" alt="image météo de vendredi" class="weather-image" />
-        <p class="temperature">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusSix">Samedi</p>
-        <img src="./images/cloud.png" alt="image météo de samedi" class="weather-image" />
-        <p class="temperature">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusSeven">Dimanche</p>
-        <img src="./images/cloud.png" alt="image météo de dimanche" class="weather-image" />
-        <p class="temperature">8 °C</p>
+        <img src="./images/cloud.png" alt="image météo de vendredi" class="weather-image" id="plusFiveImg" />
+        <p class="temperature" id="plusFiveTemp">8 °C</p>
       </li>
     </ul>
 
