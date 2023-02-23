@@ -1,7 +1,6 @@
 import {apiKey} from './apiKey.js';
 
 
-
 // Alerte si la géolocalisation n'est pas activée
 if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(location => {
@@ -14,8 +13,7 @@ if(navigator.geolocation) {
 }
 
 
-
-// tableau des images de météo associées
+// tableau des icones de météo
 let imgArray = [
   'images/cloud.png',
   'images/rain.png',
@@ -26,10 +24,7 @@ let imgArray = [
 ];
 
 
-
-// variables des jours pour la température  
-let daysName = document.querySelectorAll(".day-name");
-let daysTemperature = document.querySelectorAll(".temperature");
+// variables de la semaine
 let plusOneTemp = document.querySelector("#plusOneTemp");
 let plusTwoTemp = document.querySelector("#plusTwoTemp");
 let plusThreeTemp = document.querySelector("#plusThreeTemp");
@@ -40,7 +35,12 @@ let plusTwoImg = document.querySelector('#plusTwoImg');
 let plusThreeImg = document.querySelector('#plusThreeImg');
 let plusForImg = document.querySelector('#plusForImg');
 let plusFiveImg = document.querySelector('#plusFiveImg');
-
+// variables du jour en cours
+const image = document.querySelector('.main-weather-image');
+const temperature = document.querySelector('.main-temperature');
+const mainWeather = document.querySelector('.main-weather');
+const humidity = document.querySelector('.humidity');
+const position = document.querySelector('.position');
 
 
 // Aller chercher les infos de l'API
@@ -56,19 +56,7 @@ async function getWeatherData(long, lat){
 }
 
 
-
-// aller chercher dans le document HTML
-const image = document.querySelector('.main-weather-image');
-const temperature = document.querySelector('.main-temperature');
-const mainWeather = document.querySelector('.main-weather');
-const humidity = document.querySelector('.humidity');
-const position = document.querySelector('.position');
-
-const imageNav = document.querySelectorAll('.weather-image');
-
-
-
-// Changer le jour actuel
+// Changer la date du jour en cours
 let currentDate = document.querySelector(".current-date");
 
 const currentDay = new Date().toLocaleDateString("fr-FR", {weekday: "long", day: "numeric", month: "long"});
@@ -77,9 +65,7 @@ function currentDayDate (e) {
 }
 currentDayDate(currentDay);
 
-
-
-// Changer les autres jours
+// Changer la date des autres jours
 let plusOne = document.getElementById('plusOne');
 let plusTwo = document.getElementById('plusTwo');
 let plusThree = document.getElementById('plusThree');
@@ -104,38 +90,7 @@ plusDate(plusSix);
 plusDate(plusSeven);
 
 
-
-// afficher les résultats de l'API pour la jour en cours
-function mainInfo(data){
-  let mainTemperature = Math.round(data.list[0].main.temp);
-  temperature.innerHTML = `${mainTemperature}°C`;
-
-  let weatherNiceDescription = data.list[0].weather[0].description;
-  mainWeather.innerHTML = weatherNiceDescription;
-
-  let weatherDescription = data.list[0].weather[0].main;
-  if(weatherDescription === 'Rain'){
-    image.src = imgArray[1];
-  } else if(weatherDescription === 'Clouds'){
-    image.src = imgArray[0];
-  } else if(weatherDescription === 'Clear'){
-    image.src = imgArray[2];
-  } else if(weatherDescription === 'Snow'){
-    image.src = imgArray[5];
-  } else {
-    image.src = imgArray[4];
-  }
-
-  let mainHumidity = data.list[3].main.humidity;
-  humidity.innerHTML = `${mainHumidity}% d'humidité`;
-
-  let mainPosition = data.city.name;
-  position.innerHTML = mainPosition;
-}
-  
-
-
-// afficher les résultats de l'API pour la semaine
+// fonction pour faciliter l'affichage de la température et de l'icone
 function setWeatherInfo(element, elementImg, temperature, weatherDescription){
   element.innerHTML = `${Math.round(temperature)}°C`;
 
@@ -158,6 +113,21 @@ function setWeatherInfo(element, elementImg, temperature, weatherDescription){
   }
 }
 
+// afficher les infos du jour en cours
+function mainInfo(data){
+  setWeatherInfo(temperature, image, data.list[0].main.temp, data.list[0].weather[0].main)
+
+  let weatherNiceDescription = data.list[0].weather[0].description;
+  mainWeather.innerHTML = weatherNiceDescription;
+
+  let mainHumidity = data.list[3].main.humidity;
+  humidity.innerHTML = `${mainHumidity}% d'humidité`;
+
+  let mainPosition = data.city.name;
+  position.innerHTML = mainPosition;
+}
+
+// afficher les infos pour la semaine
 function weekInfo(data){
   setWeatherInfo(plusOneTemp, plusOneImg, data.list[8].main.temp, data.list[8].weather[0].main);
   setWeatherInfo(plusTwoTemp, plusTwoImg, data.list[16].main.temp, data.list[16].weather[0].main);
@@ -165,85 +135,3 @@ function weekInfo(data){
   setWeatherInfo(plusForTemp, plusForImg, data.list[32].main.temp, data.list[32].weather[0].main);
   setWeatherInfo(plusFiveTemp, plusFiveImg, data.list[39].main.temp, data.list[39].weather[0].main);
 }
-
-// function weekInfo(data){
-//   let plusOneTemperature = Math.round(data.list[8].main.temp);
-//   plusOneTemp.innerHTML = `${plusOneTemperature}°C`;
-
-//   let weatherDescriptionOne = data.list[8].weather[0].main;
-//   if(weatherDescriptionOne === 'Rain'){
-//     plusOneImg.src = imgArray[1];
-//   } else if(weatherDescriptionOne === 'Clouds'){
-//     plusOneImg.src = imgArray[0];
-//   } else if(weatherDescriptionOne === 'Clear'){
-//     plusOneImg.src = imgArray[2];
-//   } else if(weatherDescriptionOne === 'Snow'){
-//     plusOneImg.src = imgArray[5];
-//   } else {
-//     plusOneImg.src = imgArray[4];
-//   }
-
-//   let plusTwoTemperature = Math.round(data.list[16].main.temp);
-//   plusTwoTemp.innerHTML = `${plusTwoTemperature}°C`;
-
-//   let weatherDescriptionTwo = data.list[16].weather[0].main;
-//   if(weatherDescriptionTwo === 'Rain'){
-//     plusTwoImg.src = imgArray[1];
-//   } else if(weatherDescriptionTwo === 'Clouds'){
-//     plusTwoImg.src = imgArray[0];
-//   } else if(weatherDescriptionTwo === 'Clear'){
-//     plusTwoImg.src = imgArray[2];
-//   } else if(weatherDescriptionTwo === 'Snow'){
-//     plusTwoImg.src = imgArray[5];
-//   } else {
-//     plusTwoImg.src = imgArray[4];
-//   }
-
-//   let plusThreeTemperature = Math.round(data.list[24].main.temp);
-//   plusThreeTemp.innerHTML = `${plusThreeTemperature}°C`;
-
-//   let weatherDescriptionThree = data.list[24].weather[0].main;
-//   if(weatherDescriptionThree === 'Rain'){
-//     plusThreeImg.src = imgArray[1];
-//   } else if(weatherDescriptionThree === 'Clouds'){
-//     plusThreeImg.src = imgArray[0];
-//   } else if(weatherDescriptionThree === 'Clear'){
-//     plusThreeImg.src = imgArray[2];
-//   } else if(weatherDescriptionThree === 'Snow'){
-//     plusThreeImg.src = imgArray[5];
-//   } else {
-//     plusThreeImg.src = imgArray[4];
-//   }
-
-//   let plusForTemperature = Math.round(data.list[32].main.temp);
-//   plusForTemp.innerHTML = `${plusForTemperature}°C`;
-
-//   let weatherDescriptionFor = data.list[32].weather[0].main;
-//   if(weatherDescriptionFor === 'Rain'){
-//     plusForImg.src = imgArray[1];
-//   } else if(weatherDescriptionFor === 'Clouds'){
-//     plusForImg.src = imgArray[0];
-//   } else if(weatherDescriptionFor === 'Clear'){
-//     plusForImg.src = imgArray[2];
-//   } else if(weatherDescriptionFor === 'Snow'){
-//     plusForImg.src = imgArray[5];
-//   } else {
-//     plusForImg.src = imgArray[4];
-//   }
-
-//   let plusFiveTemperature = Math.round(data.list[39].main.temp);
-//   plusFiveTemp.innerHTML = `${plusFiveTemperature}°C`;
-
-//   let weatherDescriptionFive = data.list[39].weather[0].main;
-//   if(weatherDescriptionFive === 'Rain'){
-//     plusFiveImg.src = imgArray[1];
-//   } else if(weatherDescriptionFive === 'Clouds'){
-//     plusFiveImg.src = imgArray[0];
-//   } else if(weatherDescriptionFive === 'Clear'){
-//     plusFiveImg.src = imgArray[2];
-//   } else if(weatherDescriptionFive === 'Snow'){
-//     plusFiveImg.src = imgArray[5];
-//   } else {
-//     plusFiveImg.src = imgArray[4];
-//   }
-// }
