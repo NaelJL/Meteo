@@ -9,50 +9,52 @@
     <script src="apiKey.js" defer type="module"></script>
     <title>Météo</title>
   </head>
+
   <body>
-    <header>
-      <h1>Ma météo de poche</h1>
-      <img src="./images/rain.png" alt="image de la météo actuelle" class="main-weather-image" />
-      <p class="current-date">Aujourd'hui</p>
-      <p class="main-temperature">8 °C</p>
-      <p class="main-weather">Pluie</p>
-      <p class="humidity">Humidité</p>
-      <p class="position">Grenoble</p>
-    </header>
+    <div class="bloc">
+      <section class="current-bloc">
+        <div class="div-start">
+          <p class="current-day"><span>Jour</span></p>
+          <p class="current-date">Date</p>
+          <div class="position-bloc">
+            <img src="images/location.png" alt="petite icone de position" class="location-img" />
+            <p class="position">Position</p>
+          </div>
+        </div>
+        <div class="div-end">
+          <p class="main-temperature"><span>Température</span></p>
+          <p class="main-weather">Temps</p>
+        </div>
+      </section>
 
-    <ul>
-      <li>
-        <p class="day-name" id="plusOne">Lundi</p>
-        <img src="./images/cloud.png" alt="image météo de lundi" class="weather-image" id="plusOneImg" />
-        <p class="temperature" id="plusOneTemp">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusTwo">Mardi</p>
-        <img src="./images/cloud.png" alt="image météo de mardi" class="weather-image" id="plusTwoImg" />
-        <p class="temperature" id="plusTwoTemp">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusThree">Mercredi</p>
-        <img src="./images/cloud.png" alt="image météo de mercredi" class="weather-image" id="plusThreeImg" />
-        <p class="temperature" id="plusThreeTemp">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusFour">Jeudi</p>
-        <img src="./images/cloud.png" alt="image météo de jeudi" class="weather-image" id="plusForImg" />
-        <p class="temperature" id="plusForTemp">8 °C</p>
-      </li>
-      <li>
-        <p class="day-name" id="plusFive">Vendredi</p>
-        <img src="./images/cloud.png" alt="image météo de vendredi" class="weather-image" id="plusFiveImg" />
-        <p class="temperature" id="plusFiveTemp">8 °C</p>
-      </li>
-    </ul>
-
-    <footer>
-      <p>
-        Ce site vous est proposé par
-        <a href="https://github.com/NaelJL" target="_blank" class="name">Nael</a>.
-      </p>
-    </footer>
+      <section class="week-bloc">
+        <div>
+          <p class="humidity">Humidité</p>
+          <p class="wind">Vent</p>
+        </div>
+        <div class="week-days">
+          <div>
+            <img src="./images/cloud-white.png" alt="image météo de lundi" class="weather-image" id="plusOneImg" />
+            <p class="day-name" id="plusOne">Jour</p>
+            <p class="temperature" id="plusOneTemp">Temp</p>
+          </div>
+          <div>
+            <img src="./images/cloud-white.png" alt="image météo de mardi" class="weather-image" id="plusTwoImg" />
+            <p class="day-name" id="plusTwo">Jour</p>
+            <p class="temperature" id="plusTwoTemp">Temp</p>
+          </div>
+          <div>
+            <img src="./images/cloud-white.png" alt="image météo de mercredi" class="weather-image" id="plusThreeImg" />
+            <p class="day-name" id="plusThree">Jour</p>
+            <p class="temperature" id="plusThreeTemp">Temp</p>
+          </div>
+          <div>
+            <img src="./images/cloud-white.png" alt="image météo de jeudi" class="weather-image" id="plusForImg" />
+            <p class="day-name" id="plusFour">Jour</p>
+            <p class="temperature" id="plusForTemp">Temp</p>
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
 </html>

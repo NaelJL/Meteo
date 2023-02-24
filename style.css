@@ -1,101 +1,136 @@
 @font-face {
-    font-family: 'Roboto';
-    src: url("./fonts/Roboto-Regular.ttf") format('truetype');
+    font-family: 'Roboto Black';
+    src: url("./fonts/Roboto-Black.ttf") format('truetype');
 }
 @font-face {
-    font-family: 'Batuphat';
-    src: url("./fonts/Batuphat\ Script.otf") format('opentype');
+    font-family: 'Roboto Medium';
+    src: url("./fonts/Roboto-Medium.ttf") format('truetype');
 }
+@font-face {
+    font-family: 'Roboto Light';
+    src: url("./fonts/Roboto-Light.ttf") format('truetype');
+}
+
 
 body {
     min-height: 100%;
-    background: url('images/joanna-kosinska-mjC9apK53a8-unsplash.jpg');
-    background-attachment: fixed;
-    font-family: 'Roboto';
+    background-color: rgba(54, 61, 74, 1);
+    font-family: 'Roboto Light', sans-serif;
+    font-size: 15px;
 }
-header {
-    text-align: center;
-    margin-top: 5%
+span {
+    font-family: 'Roboto Black';
+    font-size: 25px;
+    letter-spacing: 0.8px;
 }
-h1 {
-    font-family: 'Batuphat';
-    font-size: 60px;
-    margin-bottom: 20px;
-    text-shadow: 15px 10px 1px rgba(151, 171, 191, 0.5);
+.bloc {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    height: 380px;
 }
-header p  {
-    font-size: large;
+.current-bloc {
+    background-image: url('images/clouds.gif');
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: azure;
+    padding: 20px 90px 20px 15px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
 }
-.current-date, .main-temperature {
-    font-weight: 900;
+.current-bloc:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s linear;
 }
-.main-weather-image {
-    width: 5%;
-    text-align: center;
+.main-temperature {
+    font-family: 'Roboto Black';
+    font-size: 35px;
+    letter-spacing: 0.8px;
+}
+.humidity > span, .wind > span {
+    font-family: 'Roboto Medium';
+    letter-spacing: 0.9px;
+    font-size: 18px;
+}
+.humidity, .wind {
+    font-family: 'Roboto Light';
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+.temperature {
+    font-family: 'Roboto Medium';
+    letter-spacing: 0.8px;
+    font-size: 18px;
+}
+.current-date, .main-weather {
+    font-size: 18px;  
+}
+.location-img {
+    width: 15px;
+    height: 15px;
+}
+.position-bloc {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+.position {
+    margin: 0px;
+    font-size: 18px;
+}
+.week-bloc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    background-color: rgba(29, 33, 40, 1);
+    color:rgba(254, 254, 254);
+    padding: 20px;
+    border-radius: 0px 5px 5px 0px;
+}
+.week-days {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: rgb(37, 43, 53);
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.week-days > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    gap: 20px;
+}
+.week-days > div:hover {
+    background-color: rgba(240, 255, 255, 0.7);
+    border-radius: 5px;
+    color: black;
+    transform: scale(1.2);
+    animation: transform 0.2s linear;
+}
+.day-name, .temperature {
+    margin: 0px;
 }
 .weather-image {
-    width: clamp(30%, 32%, 35%);
+    width: 30px;
     margin-left: auto;
     margin-right: auto;
 }
-ul {
-    list-style: none;
-    display: flex;
-    width: 60%;
-    margin: 1% auto 1% auto;
-    padding: 3%;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 3px 3px 2px rgba(151, 171, 191, 0.5);
-    border-radius: 1%;
-}
-li {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-footer {
-    text-align: center;
-    margin: 40px 0px;
-}
-.name {
-    font-family: 'Batuphat';
-}
-a {
-    text-decoration: none;
-    color: black;
-}
-a:hover {
-    text-shadow: 0px 0px 2px gray;
-}
 
-@media only screen and (max-width: 850px) {
-    header {
-        margin-top: 20%;
-        margin-bottom: 10%;
-    }
-    h1 {
-        font-size: 40px;
-    }
-    .main-weather-image {
-        width: 10%;
-    }
-    ul {
+@media only screen and (max-width: 750px){
+    .bloc {
         flex-direction: column;
-        width: 40%;
+        margin: 200px auto auto auto;
+        width: 350px;
     }
-    .weather-image {
-        width: 20%;
-    }
-    footer {
-        margin-top: 10%;
-        margin-bottom: 10%;
-    }
-}
-@media only screen and (max-width: 450px) {
-    .main-weather-image {
-        width: 20%;
-    }
-    .weather-image {
-        width: 25%;
+    .div-end {
+        text-align: right;
     }
 }

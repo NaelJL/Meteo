@@ -14,13 +14,21 @@ if(navigator.geolocation) {
 
 
 // tableau des icones de météo
-let imgArray = [
+let imgArrayDay = [
   'images/cloud.png',
   'images/rain.png',
   'images/sun.png',
   'images/night.png',
   'images/rocket.png',
   'images/snow.png'
+];
+let imgArray = [
+  'images/cloud-white.png',
+  'images/rain-white.png',
+  'images/sun-white.png',
+  'images/night.png',
+  'images/rocket.png',
+  'images/snow-white.png'
 ];
 
 
@@ -36,11 +44,12 @@ let plusThreeImg = document.querySelector('#plusThreeImg');
 let plusForImg = document.querySelector('#plusForImg');
 let plusFiveImg = document.querySelector('#plusFiveImg');
 // variables du jour en cours
-const image = document.querySelector('.main-weather-image');
+const currentBlocImg = document.querySelector('.current-bloc');
 const temperature = document.querySelector('.main-temperature');
 const mainWeather = document.querySelector('.main-weather');
-const humidity = document.querySelector('.humidity');
 const position = document.querySelector('.position');
+const humidity = document.querySelector('.humidity');
+const wind = document.querySelector('.wind');
 
 
 // Aller chercher les infos de l'API
@@ -52,18 +61,20 @@ async function getWeatherData(long, lat){
   console.log(data);
 
   mainInfo(data);
+  mainPercents(data);
   weekInfo(data);
 }
 
 
 // Changer la date du jour en cours
+let currentDay = document.querySelector(".current-day");
 let currentDate = document.querySelector(".current-date");
 
-const currentDay = new Date().toLocaleDateString("fr-FR", {weekday: "long", day: "numeric", month: "long"});
-function currentDayDate (e) {
-    currentDate.innerHTML = e.toUpperCase();
-}
-currentDayDate(currentDay);
+const currentDayVar = new Date().toLocaleDateString("fr-FR", {weekday: "long"}).toUpperCase();
+currentDay.innerHTML = `<span>${currentDayVar}</span>`;
+
+const currentDateVar = new Date().toLocaleDateString("fr-FR", {day: "numeric", month: "long", year: "numeric"});
+currentDate.innerHTML = currentDateVar;
 
 // Changer la date des autres jours
 let plusOne = document.getElementById('plusOne');
@@ -75,10 +86,10 @@ let plusSix = document.getElementById('plusSix');
 let plusSeven = document.getElementById('plusSeven');
 let tomorrow = new Date();
 
-function plusDate (plus) {
+function plusDate (index) {
     tomorrow.setDate(tomorrow.getDate() + 1);
-    let tomorrowString = tomorrow.toLocaleDateString("fr-FR", {weekday: "long", day: "numeric"});
-    plus.innerHTML = tomorrowString.toLowerCase();
+    let tomorrowString = tomorrow.toLocaleDateString("fr-FR", {weekday: "short", day: "numeric"});
+    index.innerHTML = tomorrowString.toLowerCase();
 }
 
 plusDate(plusOne);
@@ -115,16 +126,38 @@ function setWeatherInfo(element, elementImg, temperature, weatherDescription){
 
 // afficher les infos du jour en cours
 function mainInfo(data){
-  setWeatherInfo(temperature, image, data.list[0].main.temp, data.list[0].weather[0].main)
+  temperature.innerHTML = `${Math.round(data.list[0].main.temp)}°C`;
 
   let weatherNiceDescription = data.list[0].weather[0].description;
   mainWeather.innerHTML = weatherNiceDescription;
 
-  let mainHumidity = data.list[3].main.humidity;
-  humidity.innerHTML = `${mainHumidity}% d'humidité`;
-
   let mainPosition = data.city.name;
   position.innerHTML = mainPosition;
+
+  switch(data.list[0].weather[0].main){
+    case 'Clouds':
+      currentBlocImg.style.backgroundImage = "url(images/clouds.gif)";
+      break;
+    case 'Rain':
+      currentBlocImg.style.backgroundImage = "url(images/rain.gif)";
+      break;
+    case 'Clear':
+      currentBlocImg.style.backgroundImage = "url(images/sun.gif)";
+      break;
+    case 'Snow':
+      currentBlocImg.style.backgroundImage = "url(images/snow.gif)";
+      break;
+  }
+}
+
+// afficher les pourcentages pour le jour en cours
+function mainPercents(data){
+  let mainHumidity = data.list[0].main.humidity;
+  humidity.innerHTML = `<span>Humidité :</span> ${mainHumidity}%`;
+
+  let mainWindMeters = data.list[0].wind.speed;
+  let mainWindKm = Math.round(mainWindMeters * 3.6);
+  wind.innerHTML = `<span>Vent :</span> ${mainWindKm}km/h`;
 }
 
 // afficher les infos pour la semaine
